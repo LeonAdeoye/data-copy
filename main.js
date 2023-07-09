@@ -64,13 +64,13 @@ const structuredCloning = () =>
 }
 
 // DO NOT USE BECAUSE OF STACK OVERFLOW
-function ab2str(buf)
+const ab2str = (buf) =>
 {
     return String.fromCharCode.apply(null, new Uint16Array(buf));
 }
 
 // DO NOT USE BECAUSE OF STACK OVERFLOW
-function str2ab(str)
+const str2ab = (str) =>
 {
     let buf = new ArrayBuffer(str.length*2); // 2 bytes for each char
     let bufView = new Uint16Array(buf);
@@ -180,18 +180,33 @@ const serializeAndDeserialize = () =>
 // This method requires JSON stringify and parse which maybe slow and result in string size limit.
 const bufferFrom = () =>
 {
-    let data = {name: "John", age: 30, birth_city: "New York", hobbies: ["reading", "cooking", "coding", "running", "chess"], address: {street: "123 Main St", city: "New York", state: "NY"}};
     let jsonAr = [];
-
-    for(let i = 0; i < 3000000; i++)
+    for(let i = 0; i < 200000; i++)
     {
-        jsonAr.push(data);
+        jsonAr.push({id: i, name: "John", age: 30, birth_city: "New York", hobbies: ["reading", "cooking", "coding", "running", "chess"], address: {street: "123 Main St", city: "New York", state: "NY"}});
     }
 
     const buf = Buffer.from(JSON.stringify(jsonAr));
     console.log(buf);
     const objAgain = JSON.parse(buf.toString());
     console.log(objAgain);
+}
+
+const testWebWorker = () =>
+{
+    let data = {name: "John", age: 30, birth_city: "New York", hobbies: ["reading", "cooking", "coding", "running", "chess"], address: {street: "123 Main St", city: "New York", state: "NY"}};
+    let jsonAr = [];
+
+    for(let i = 0; i < 800000; i++)
+    {
+        jsonAr.push(data);
+    }
+
+    let worker = new Worker("worker.js");
+    worker.postMessage(jsonAr);
+    worker.onmessage = (e) => {
+        console.log(e.data);
+    }
 }
 
 conversion();
@@ -201,4 +216,5 @@ jsonBufferify();
 charByChar();
 serializeAndDeserialize();
 bufferFrom();
+//testWebWorker();
 
