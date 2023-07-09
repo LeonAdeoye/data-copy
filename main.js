@@ -192,23 +192,6 @@ const bufferFrom = () =>
     console.log(objAgain);
 }
 
-const testWebWorker = () =>
-{
-    let data = {name: "John", age: 30, birth_city: "New York", hobbies: ["reading", "cooking", "coding", "running", "chess"], address: {street: "123 Main St", city: "New York", state: "NY"}};
-    let jsonAr = [];
-
-    for(let i = 0; i < 800000; i++)
-    {
-        jsonAr.push(data);
-    }
-
-    let worker = new Worker("worker.js");
-    worker.postMessage(jsonAr);
-    worker.onmessage = (e) => {
-        console.log(e.data);
-    }
-}
-
 conversion();
 dataViews();
 structuredCloning();

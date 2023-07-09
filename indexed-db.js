@@ -1,4 +1,5 @@
 const indexedDB = window.indexedDB;
+
 const indexedDBSimpleJson = () =>
 {
     let jsonAr = [];
@@ -51,7 +52,7 @@ const indexedDBSimpleJson = () =>
 
         transaction.oncomplete = () => db.close();
     }
-}
+};
 
 // Use array buffers to avoid locking the main UI thread for large data sets.
 const indexedDBArrayBuffer = () =>
@@ -101,7 +102,7 @@ const indexedDBArrayBuffer = () =>
         }
         transaction.oncomplete = () => db.close();
     }
-}
+};
 
 indexedDBSimpleJson();
 indexedDBArrayBuffer();
