@@ -45,7 +45,7 @@ const testWebWorkerWithArrayBuffer = () =>
 // For backwards compatibility
 if(window.Worker)
 {
-    //testWebWorkerWithoutArrayBuffer();
+    testWebWorkerWithoutArrayBuffer();
     testWebWorkerWithArrayBuffer();
 }
 
